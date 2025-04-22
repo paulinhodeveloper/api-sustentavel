@@ -1,6 +1,7 @@
 package com.sustentavel.api.controller;
 
 import com.sustentavel.api.dto.*;
+import com.sustentavel.api.model.CategoriaAcao;
 import com.sustentavel.api.service.AcaoSustentavelService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,11 @@ public class AcaoSustentavelController {
     @GetMapping("/{id}")
     public ResponseEntity<AcaoSustentavelResponse> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(service.buscarPorId(id));
+    }
+
+    @GetMapping("/categoria")
+    public ResponseEntity<List<AcaoSustentavelResponse>> buscarPorCategoria(@RequestParam CategoriaAcao tipo) {
+        return ResponseEntity.ok(service.listarPorCategoria(tipo));
     }
 
     @PostMapping

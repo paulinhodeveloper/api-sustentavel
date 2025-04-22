@@ -4,8 +4,10 @@ import com.sustentavel.api.dto.*;
 import com.sustentavel.api.exception.RecursoNaoEncontradoException;
 import com.sustentavel.api.mapper.AcaoSustentavelMapper;
 import com.sustentavel.api.model.AcaoSustentavel;
+import com.sustentavel.api.model.CategoriaAcao;
 import com.sustentavel.api.repository.AcaoSustentavelRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +30,13 @@ public class AcaoSustentavelService {
         AcaoSustentavel acao = repository.findById(id)
             .orElseThrow(() -> new RecursoNaoEncontradoException("Ação com ID " + id + " não encontrada."));
         return AcaoSustentavelMapper.toResponse(acao);
+    }
+
+    public List<AcaoSustentavelResponse> listarPorCategoria(CategoriaAcao categoria) {
+        return repository.findByCategoria(categoria)
+            .stream()
+            .map(AcaoSustentavelMapper::toResponse)
+            .collect(Collectors.toList());
     }
 
     public AcaoSustentavelResponse salvar(AcaoSustentavelRequest dto) {
